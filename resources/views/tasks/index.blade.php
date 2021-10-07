@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">MIS TAREAS</div>
 
@@ -35,7 +35,12 @@
                             <span class="badge badge-success">Completada</span>
                             @endif
                           </td>
-                          <td><a href="" class="btn btn-outline-success btn-sm">Completar</a></td>
+                          <td>
+                            @if($task->is_complete == false)
+                            <a href="{{ route('tareas.status', $task->id) }}" class="btn btn-outline-success btn-sm">Completar</a>
+                            @endif
+                            <a href="{{ route('tareas.edit', $task->id) }}" class="btn btn-outline-info btn-sm">Editar</a>
+                          </td>
                         </tr>
                         @endforeach
                       </tbody>

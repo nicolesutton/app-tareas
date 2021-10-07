@@ -38,22 +38,41 @@ class TaskController extends Controller
         return redirect()->route('tareas.index');
     }
 
-    public function show(Task $task)
+    public function show($id)
     {
         //
     }
 
-    public function edit(Task $task)
+    public function edit($id)
     {
-        //
+        $task = Task::find($id);
+
+        return view('tasks.edit')->with('task', $task);
     }
 
-    public function update(Request $request, Task $task)
+    public function update(Request $request, $id)
     {
-        //
+        $task = Task::find($id);
+
+        $task->title = $request->title;
+        $task->deadline = $request->deadline;
+        $task->description = $request->description;
+
+        $task->save();
+
+        return redirect()->route('tareas.index');
     }
 
-    public function destroy(Task $task)
+    public function status($id)
+    {
+        $task = Task::find($id);
+        $task->is_complete = true;
+        $task->save();
+
+        return redirect()->back();
+    }
+
+    public function destroy($id)
     {
         //
     }
