@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -35,6 +37,8 @@ class TaskController extends Controller
 
         $task->save();
 
+        Session::flash('exito', 'Se guardó correctamente tu tarea.');
+
         return redirect()->route('tareas.index');
     }
 
@@ -60,6 +64,8 @@ class TaskController extends Controller
 
         $task->save();
 
+        Session::flash('info', 'Tu tarea fue editada correctamente.');
+
         return redirect()->route('tareas.index');
     }
 
@@ -69,11 +75,18 @@ class TaskController extends Controller
         $task->is_complete = true;
         $task->save();
 
+        Session::flash('info', 'Tarea completada. Sigue así.');
+
         return redirect()->back();
     }
 
     public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+
+        Session::flash('alert', 'Se eliminó la tarea de tu sistema.');
+
+        return redirect()->back();
     }
 }
