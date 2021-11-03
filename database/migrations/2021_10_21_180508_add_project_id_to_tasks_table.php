@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class AddProjectIdToTasksTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
@@ -18,11 +13,6 @@ class AddProjectIdToTasksTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('tasks', function (Blueprint $table) {
