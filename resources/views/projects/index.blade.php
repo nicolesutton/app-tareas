@@ -16,8 +16,10 @@
       </div>
       @foreach($projects as $project)
       <div class="col-md-4">
+        <div class="card card-body">
         @include ('projects.utilities._project_card')
         </div>
+      </div>  
       @endforeach
     </div>
 </div>

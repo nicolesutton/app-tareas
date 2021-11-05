@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -18,12 +19,17 @@ class TaskController extends Controller
     {
         $tasks = Task::all();
 
-        return view('tasks.index')->with('tasks', $tasks);
+        $users = User::all();
+
+        return view('tasks.index')->with('tasks', $tasks)->with('users', $users);
+
     }
 
     public function create()
     {
-        return view('tasks.create');
+        $users = User::all();
+
+        return view('tasks.create')->with('users', $users);
     }
 
     public function store(Request $request)
@@ -35,18 +41,20 @@ class TaskController extends Controller
         $task->description = $request->description;
         $task->is_complete = false;
         $task->project_id = $request->project_id;
+        $task->user_id = $request->user_id;
 
         $task->save();
 
-        Session::flash('exito', 'Se guardó correctamente tu tarea.');
+        $users = User::all();
 
-        if ($request->source == 'proyectos') {
-            return redirect()->route('proyectos.index');
-        }else {
+        Session::flash('exito', 'Se guardó correctamente tu tarea.');
+        if($request->source == 'proyectos'){
+           return redirect()->route('proyectos.index')->with('users', $users);
+        }else{
            return redirect()->route('tareas.index'); 
         }
     }
-
+    
     public function show($id)
     {
         //

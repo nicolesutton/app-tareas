@@ -10,7 +10,12 @@ class Project extends Model
     use HasFactory;
 
     public function tasks()
-    { 
-        return $this->hasMany(Task::class,'project_id', 'id');
-    }        
+    {
+        return $this->hasMany(Task::class, 'project_id', 'id');
+    }
+
+    public function users(){
+        
+        return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
+    }
 }
